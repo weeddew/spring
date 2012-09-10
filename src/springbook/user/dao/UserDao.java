@@ -13,7 +13,7 @@ public class UserDao {
 	private ConnectionMaker connectionMaker;
 
 	public UserDao() {
-		this.connectionMaker = new ConnectionMaker();
+		this.connectionMaker = new NConnectionMaker();
 	}
 
 	public void add(User user) throws ClassNotFoundException, SQLException {

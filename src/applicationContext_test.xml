@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<bean id="userDao" class="springbook.user.dao.UserDao">
-		<constructor-arg ref="connectionMaker"></constructor-arg>
+		<property name="connectionMaker" ref="connectionMaker"/>
 	</bean>
 
 	<bean id="connectionMaker" class="springbook.user.dao.NConnectionMaker"/>

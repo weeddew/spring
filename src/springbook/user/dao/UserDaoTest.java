@@ -8,8 +8,8 @@ public class UserDaoTest {
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 
-		ConnectionMaker connectionMaker = new NConnectionMaker();
-		UserDao dao = new UserDao(connectionMaker);
+		DaoFactory factory = new DaoFactory();
+		UserDao dao = factory.userDao();
 
 		User user = new User();
 		user.setId("brownie");

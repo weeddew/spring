@@ -10,8 +10,14 @@ import springbook.user.domain.User;
 
 public class UserDao {
 
+	private ConnectionMaker connectionMaker;
+
+	public UserDao() {
+		this.connectionMaker = new ConnectionMaker();
+	}
+
 	public void add(User user) throws ClassNotFoundException, SQLException {
-		Connection c = getConnection();
+		Connection c = connectionMaker.getConnection();
 
 		PreparedStatement ps = c.prepareStatement("insert into spring_users(id, name, password) values (?, ?, ?)");
 		ps.setString(1, user.getId());
@@ -25,7 +31,7 @@ public class UserDao {
 	}
 
 	public User get(String id) throws ClassNotFoundException, SQLException {
-		Connection c = getConnection();
+		Connection c = connectionMaker.getConnection();
 
 		PreparedStatement ps = c.prepareStatement("select * from spring_users where id = ?");
 		ps.setString(1, id);
@@ -43,12 +49,6 @@ public class UserDao {
 		c.close();
 
 		return user;
-	}
-
-	private Connection getConnection() throws ClassNotFoundException, SQLException {
-		Class.forName("oracle.jdbc.driver.OracleDriver");
-		Connection c = DriverManager.getConnection("jdbc:oracle:thin:@152.149.47.87:8082:edu", "edu", "edu");
-		return c;
 	}
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {

@@ -2,6 +2,7 @@ package springbook.user.dao;
 
 import java.sql.SQLException;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
@@ -10,22 +11,19 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import springbook.user.domain.User;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertThat;
 
 public class UserDaoTest {
 
+	private UserDao dao;
+	private User user1;
+	private User user2;
+
 	@Test
 	public void addAndGet() throws SQLException {
 
-		ApplicationContext context = new GenericXmlApplicationContext("/applicationContext_test.xml");
-		UserDao dao = context.getBean("userDao", UserDao.class);
-
 		dao.deleteAll();
 		assertThat(dao.getCount(), is(0));
-
-		User user1 = new User("brownie", "브라우니", "anfdj");
-		User user2 = new User("aaa", "홍길동", "asdf");
 
 		dao.add(user1);
 		dao.add(user2);
@@ -42,12 +40,19 @@ public class UserDaoTest {
 
 	@Test(expected=EmptyResultDataAccessException.class)
 	public void getUserFailure() throws SQLException {
-		ApplicationContext context = new GenericXmlApplicationContext("/applicationContext_test.xml");
-		UserDao dao = context.getBean("userDao", UserDao.class);
 
 		dao.deleteAll();
 		assertThat(dao.getCount(), is(0));
 
 		dao.get("unknown_id");
+	}
+
+	@Before
+	public void setUp() {
+		ApplicationContext context = new GenericXmlApplicationContext("/applicationContext_test.xml");
+		dao = context.getBean("userDao", UserDao.class);
+
+		user1 = new User("brownie", "브라우니", "anfdj");
+		user2 = new User("aaa", "홍길동", "asdf");
 	}
 }

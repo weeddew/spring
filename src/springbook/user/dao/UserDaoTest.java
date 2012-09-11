@@ -1,6 +1,6 @@
 package springbook.user.dao;
 
-import java.sql.SQLException;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +26,7 @@ public class UserDaoTest {
 	private User user2;
 
 	@Test
-	public void addAndGet() throws SQLException {
+	public void addAndGet() {
 
 		dao.deleteAll();
 		assertThat(dao.getCount(), is(0));
@@ -45,12 +45,24 @@ public class UserDaoTest {
 	}
 
 	@Test(expected=EmptyResultDataAccessException.class)
-	public void getUserFailure() throws SQLException {
+	public void getUserFailure() {
 
 		dao.deleteAll();
 		assertThat(dao.getCount(), is(0));
 
 		dao.get("unknown_id");
+	}
+
+	@Test
+	public void getAll() {
+
+		dao.deleteAll();
+
+		dao.add(user1);
+		dao.add(user2);
+
+		List<User> users = dao.getAll();
+		assertThat(users.size(), is(2));
 	}
 
 	@Before

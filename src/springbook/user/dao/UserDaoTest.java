@@ -4,18 +4,24 @@ import java.sql.SQLException;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.GenericXmlApplicationContext;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import springbook.user.domain.User;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations="/applicationContext_test.xml")
 public class UserDaoTest {
 
+	@Autowired
 	private UserDao dao;
+
 	private User user1;
 	private User user2;
 
@@ -49,9 +55,6 @@ public class UserDaoTest {
 
 	@Before
 	public void setUp() {
-		ApplicationContext context = new GenericXmlApplicationContext("/applicationContext_test.xml");
-		dao = context.getBean("userDao", UserDao.class);
-
 		user1 = new User("brownie", "브라우니", "anfdj");
 		user2 = new User("aaa", "홍길동", "asdf");
 	}

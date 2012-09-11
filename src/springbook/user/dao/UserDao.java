@@ -27,14 +27,13 @@ public class UserDao {
 
 	public void deleteAll() throws SQLException {
 
-		class DeleteAllStatement implements StatementStrategy {
+		StatementStrategy strategy = new StatementStrategy() {
 			public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
 				PreparedStatement ps = c.prepareStatement("delete from spring_users");
 				return ps;
 			}
-		}
+		};
 
-		StatementStrategy strategy = new DeleteAllStatement();
 		jcbcContext(strategy);
 	}
 

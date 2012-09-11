@@ -33,7 +33,7 @@ public class UserServiceTest {
 	private User user2;
 
 	@Test
-	public void addUsers() {
+	public void addUsers() throws Exception {
 
 		dao.deleteAll();
 		assertThat(dao.getCount(), is(0));

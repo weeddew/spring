@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -44,6 +45,28 @@ public class UserServiceTest {
 		userService.addUsers(users);
 
 		assertThat(dao.getCount(), is(2));
+	}
+
+	@Test
+	public void transactionTest() {
+
+		dao.deleteAll();
+		assertThat(dao.getCount(), is(0));
+
+		try {
+			List<User> users = new ArrayList<User>();
+			users.add(user1);
+			users.add(user2);
+			users.add(user2);
+
+			userService.addUsers(users);
+
+			fail("DuplicateKeyException expected");
+		} catch (Exception e) {
+			assertThat(e, is(DuplicateKeyException.class));
+		}
+
+		assertThat(dao.getCount(), is(0));
 	}
 
 	@Before

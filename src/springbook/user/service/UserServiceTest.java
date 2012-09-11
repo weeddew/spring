@@ -43,8 +43,7 @@ public class UserServiceTest {
 
 		userService.addUsers(users);
 
-		List<User> users2 = dao.getAll();
-		assertThat(users2.size(), is(2));
+		assertThat(dao.getCount(), is(2));
 	}
 
 	@Before

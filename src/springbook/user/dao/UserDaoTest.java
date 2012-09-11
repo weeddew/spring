@@ -22,17 +22,19 @@ public class UserDaoTest {
 		dao.deleteAll();
 		assertThat(dao.getCount(), is(0));
 
-		User user = new User();
-		user.setId("brownie");
-		user.setName("브라우니");
-		user.setPassword("anfdj");
+		User user1 = new User("brownie", "브라우니", "anfdj");
+		User user2 = new User("aaa", "홍길동", "asdf");
 
-		dao.add(user);
-		assertThat(dao.getCount(), is(1));
+		dao.add(user1);
+		dao.add(user2);
+		assertThat(dao.getCount(), is(2));
 
-		User user2 = dao.get("brownie");
+		User user3 = dao.get(user1.getId());
+		assertThat(user3.getName(), is(user1.getName()));
+		assertThat(user3.getPassword(), is(user1.getPassword()));
 
-		assertThat(user2.getName(), is(user.getName()));
-		assertThat(user2.getPassword(), is(user.getPassword()));
+		User user4 = dao.get(user2.getId());
+		assertThat(user4.getName(), is(user2.getName()));
+		assertThat(user4.getPassword(), is(user2.getPassword()));
 	}
 }

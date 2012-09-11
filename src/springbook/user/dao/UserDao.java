@@ -20,17 +20,25 @@ public class UserDao {
 	}
 
 	public void add(User user) throws SQLException {
-		Connection c = dataSource.getConnection();
 
-		PreparedStatement ps = c.prepareStatement("insert into spring_users(id, name, password) values (?, ?, ?)");
-		ps.setString(1, user.getId());
-		ps.setString(2, user.getName());
-		ps.setString(3, user.getPassword());
+		Connection c = null;
+		PreparedStatement ps = null;
 
-		ps.executeUpdate();
+		try {
+			c = dataSource.getConnection();
+			ps = c.prepareStatement("insert into spring_users(id, name, password) values (?, ?, ?)");
+			ps.setString(1, user.getId());
+			ps.setString(2, user.getName());
+			ps.setString(3, user.getPassword());
 
-		ps.close();
-		c.close();
+			ps.executeUpdate();
+
+		} catch (SQLException e) {
+			throw e;
+		} finally {
+			if(ps != null) { try { ps.close(); } catch (SQLException e) { }}
+			if(c != null)  { try { c.close();  } catch (SQLException e) { }}
+		}
 	}
 
 	public User get(String id) throws SQLException {
@@ -61,14 +69,21 @@ public class UserDao {
 	}
 
 	public void deleteAll() throws SQLException {
-		Connection c = dataSource.getConnection();
 
-		PreparedStatement ps = c.prepareStatement("delete from spring_users");
+		Connection c = null;
+		PreparedStatement ps = null;
 
-		ps.executeUpdate();
+		try {
+			c = dataSource.getConnection();
+			ps = c.prepareStatement("delete from spring_users");
+			ps.executeUpdate();
 
-		ps.close();
-		c.close();
+		} catch (SQLException e) {
+			throw e;
+		} finally {
+			if(ps != null) { try { ps.close(); } catch (SQLException e) { }}
+			if(c != null)  { try { c.close();  } catch (SQLException e) { }}
+		}
 	}
 
 	public int getCount() throws SQLException {

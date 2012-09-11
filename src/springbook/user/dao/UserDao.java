@@ -27,14 +27,14 @@ public class UserDao {
 
 	public void deleteAll() throws SQLException {
 
-		StatementStrategy strategy = new StatementStrategy() {
-			public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
-				PreparedStatement ps = c.prepareStatement("delete from spring_users");
-				return ps;
+		jcbcContext(
+			new StatementStrategy() {
+				public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
+					PreparedStatement ps = c.prepareStatement("delete from spring_users");
+					return ps;
+				}
 			}
-		};
-
-		jcbcContext(strategy);
+		);
 	}
 
 	public User get(String id) throws SQLException {

@@ -1,6 +1,7 @@
 package springbook.user.service;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertThat;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class UserServiceTest {
 		userService.addUsers(users);
 
 		List<User> users2 = dao.getAll();
-		assertThat(users.size(), is(2));
+		assertThat(users2.size(), is(2));
 	}
 
 	@Before

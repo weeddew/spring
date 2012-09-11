@@ -14,7 +14,7 @@ import static org.junit.Assert.assertThat;
 public class UserDaoTest {
 
 	@Test
-	public void addAndGet() throws ClassNotFoundException, SQLException {
+	public void addAndGet() throws SQLException {
 
 		ApplicationContext context = new GenericXmlApplicationContext("/applicationContext_test.xml");
 		UserDao dao = context.getBean("userDao", UserDao.class);

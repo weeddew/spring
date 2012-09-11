@@ -5,10 +5,12 @@ import java.sql.SQLException;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import springbook.user.domain.User;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertThat;
 
 public class UserDaoTest {
@@ -36,5 +38,16 @@ public class UserDaoTest {
 		User user4 = dao.get(user2.getId());
 		assertThat(user4.getName(), is(user2.getName()));
 		assertThat(user4.getPassword(), is(user2.getPassword()));
+	}
+
+	@Test(expected=EmptyResultDataAccessException.class)
+	public void getUserFailure() throws SQLException {
+		ApplicationContext context = new GenericXmlApplicationContext("/applicationContext_test.xml");
+		UserDao dao = context.getBean("userDao", UserDao.class);
+
+		dao.deleteAll();
+		assertThat(dao.getCount(), is(0));
+
+		dao.get("unknown_id");
 	}
 }

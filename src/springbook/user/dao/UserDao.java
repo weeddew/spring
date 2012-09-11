@@ -27,10 +27,14 @@ public class UserDao {
 
 	public void deleteAll() throws SQLException {
 
+		executeSql("delete from spring_users");
+	}
+
+	private void executeSql(final String sql) throws SQLException {
 		jcbcContext(
 			new StatementStrategy() {
 				public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
-					PreparedStatement ps = c.prepareStatement("delete from spring_users");
+					PreparedStatement ps = c.prepareStatement(sql);
 					return ps;
 				}
 			}

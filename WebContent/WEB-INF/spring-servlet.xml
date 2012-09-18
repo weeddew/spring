@@ -7,6 +7,6 @@
 
 	<context:annotation-config/>
 
-	<bean name="/user/getAll" class="springbook.user.controller.UserSimpleController"></bean>
+	<context:component-scan base-package="springbook.user.controller"/>
 
 </beans>

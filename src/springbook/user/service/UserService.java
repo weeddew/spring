@@ -7,4 +7,5 @@ import springbook.user.domain.User;
 public interface UserService {
 
 	public void addUsers(List<User> users) throws Exception;
+	public List<User> getAll();
 }

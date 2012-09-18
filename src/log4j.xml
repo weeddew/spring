@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration>
+	<!-- Console Appender -->
+	<appender name="CONSOLE_STDOUT" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}] %5p (%c:%L) - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.StringMatchFilter">
+			<param name="StringToMatch" value="Result"/>
+			<param name="AcceptOnMatch" value="false"/>
+		</filter>
+	</appender>
+
+	<!-- File Appender -->
+	<appender name="FILE" class="org.apache.log4j.FileAppender">
+		<param name="File" value="C:/Users/HuSeongLee/Desktop/myLog.log"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}] %5p (%c:%L) - %m%n" />
+		</layout>
+	</appender>
+
+	<root>
+		<level value="warn"/>
+		<appender-ref ref="CONSOLE_STDOUT"/>
+	</root>
+
+</log4j:configuration>
